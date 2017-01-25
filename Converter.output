@@ -1,0 +1,2571 @@
+Terminais sem uso na gramática
+
+   FOR
+   '%'
+   NOT
+
+
+Estado 103 conflictos: 14 shift/reduce
+
+
+Gramática
+
+    0 $accept: program $end
+
+    1 program: classlist
+
+    2 classlist: class
+    3          | classlist class
+
+    4 class: CLASS IDENT '{' fieldlist funclist '}'
+    5      | CLASS IDENT '{' fieldlist '}'
+    6      | CLASS IDENT '{' funclist '}'
+    7      | CLASS IDENT '{' '}'
+
+    8 fieldlist: fieldlisti
+
+    9 fieldlisti: field
+   10           | fieldlisti field
+
+   11 field: STATIC vartype identlist ';'
+   12      | FIELD vartype identlist ';'
+
+   13 funclist: funclisti
+
+   14 funclisti: function
+   15          | funclisti function
+
+   16 function: funckind functype IDENT '(' paramlist ')' fbody
+
+   17 funckind: CTOR
+   18         | FUNCTION
+   19         | METHOD
+
+   20 functype: VARVOID
+   21         | vartype
+
+   22 fbody: '{' vardecllist instrs '}'
+
+   23 vardecllist: vardecllisti
+
+   24 vardecllisti: %empty
+   25             | vardecllisti vardecl
+
+   26 vardecl: VAR vartype identlist ';'
+
+   27 paramlist: paramlisti
+
+   28 paramlisti: param
+   29           | paramlisti ',' param
+
+   30 param: vartype IDENT
+
+   31 vartype: VARINT
+   32        | VARDOUBLE
+   33        | VARCHAR
+   34        | VARBOOL
+   35        | IDENT
+
+   36 instrs: instrsi
+
+   37 instrsi: instr ';'
+   38        | instrsi instr ';'
+
+   39 instr: LET IDENT '[' expr ']' '=' expr
+   40      | LET IDENT '=' expr
+   41      | IF '(' expr ')' block
+   42      | IF '(' expr ')' block ELSE block
+   43      | WHILE '(' expr ')' block
+   44      | DO call
+   45      | RETURN expr
+
+   46 block: '{' instrs '}'
+
+   47 call: IDENT '(' exprlist ')'
+   48     | IDENT '.' IDENT '(' exprlist ')'
+
+   49 exprlist: exprlisti
+
+   50 exprlisti: expr
+   51          | exprlisti ',' expr
+
+   52 expr: '(' expr ')'
+   53     | keywordconst
+   54     | value
+   55     | arithmetic
+   56     | condition
+   57     | '-' expr
+   58     | '~' expr
+
+   59 arithmetic: expr '+' expr
+   60           | expr '-' expr
+   61           | expr '/' expr
+   62           | expr '*' expr
+   63           | expr '&' expr
+   64           | expr '|' expr
+
+   65 condition: expr '<' expr
+   66          | expr '>' expr
+   67          | expr EQUAL expr
+   68          | expr GE expr
+   69          | expr LE expr
+   70          | expr DIFF expr
+   71          | expr AND expr
+   72          | expr OR expr
+
+   73 keywordconst: THIS
+   74             | NUL
+   75             | FALSE
+   76             | TRUE
+
+   77 value: INTEGER
+   78      | DOUBLE
+   79      | STRING
+   80      | IDENT
+
+   81 identlist: identlisti
+
+   82 identlisti: IDENT
+   83           | identlisti ',' IDENT
+
+
+Terminais, com as regras aonde aparecem
+
+$end (0) 0
+'%' (37)
+'&' (38) 63
+'(' (40) 16 41 42 43 47 48 52
+')' (41) 16 41 42 43 47 48 52
+'*' (42) 62
+'+' (43) 59
+',' (44) 29 51 83
+'-' (45) 57 60
+'.' (46) 48
+'/' (47) 61
+';' (59) 11 12 26 37 38
+'<' (60) 65
+'=' (61) 39 40
+'>' (62) 66
+'[' (91) 39
+']' (93) 39
+'{' (123) 4 5 6 7 22 46
+'|' (124) 64
+'}' (125) 4 5 6 7 22 46
+'~' (126) 58
+error (256)
+VARINT (258) 31
+VARDOUBLE (259) 32
+VARCHAR (260) 33
+VARVOID (261) 20
+VARBOOL (262) 34
+IF (263) 41 42
+ELSE (264) 42
+WHILE (265) 43
+FOR (266)
+FUNCTION (267) 18
+TRUE (268) 76
+FALSE (269) 75
+DO (270) 44
+LET (271) 39 40
+THIS (272) 73
+NUL (273) 74
+RETURN (274) 45
+METHOD (275) 19
+FIELD (276) 12
+CTOR (277) 17
+CLASS (278) 4 5 6 7
+STATIC (279) 11
+GE (280) 68
+LE (281) 69
+VAR (282) 26
+AND (283) 71
+OR (284) 72
+NOT (285)
+EQUAL (286) 67
+DIFF (287) 70
+IDENT (288) 4 5 6 7 16 30 35 39 40 47 48 80 82 83
+STRING (289) 79
+INTEGER (290) 77
+DOUBLE (291) 78
+
+
+Não-terminais, com as regras aonde aparecem
+
+$accept (57)
+    à esquerda: 0
+program (58)
+    à esquerda: 1, à direita: 0
+classlist (59)
+    à esquerda: 2 3, à direita: 1 3
+class (60)
+    à esquerda: 4 5 6 7, à direita: 2 3
+fieldlist (61)
+    à esquerda: 8, à direita: 4 5
+fieldlisti (62)
+    à esquerda: 9 10, à direita: 8 10
+field (63)
+    à esquerda: 11 12, à direita: 9 10
+funclist (64)
+    à esquerda: 13, à direita: 4 6
+funclisti (65)
+    à esquerda: 14 15, à direita: 13 15
+function (66)
+    à esquerda: 16, à direita: 14 15
+funckind (67)
+    à esquerda: 17 18 19, à direita: 16
+functype (68)
+    à esquerda: 20 21, à direita: 16
+fbody (69)
+    à esquerda: 22, à direita: 16
+vardecllist (70)
+    à esquerda: 23, à direita: 22
+vardecllisti (71)
+    à esquerda: 24 25, à direita: 23 25
+vardecl (72)
+    à esquerda: 26, à direita: 25
+paramlist (73)
+    à esquerda: 27, à direita: 16
+paramlisti (74)
+    à esquerda: 28 29, à direita: 27 29
+param (75)
+    à esquerda: 30, à direita: 28 29
+vartype (76)
+    à esquerda: 31 32 33 34 35, à direita: 11 12 21 26 30
+instrs (77)
+    à esquerda: 36, à direita: 22 46
+instrsi (78)
+    à esquerda: 37 38, à direita: 36 38
+instr (79)
+    à esquerda: 39 40 41 42 43 44 45, à direita: 37 38
+block (80)
+    à esquerda: 46, à direita: 41 42 43
+call (81)
+    à esquerda: 47 48, à direita: 44
+exprlist (82)
+    à esquerda: 49, à direita: 47 48
+exprlisti (83)
+    à esquerda: 50 51, à direita: 49 51
+expr (84)
+    à esquerda: 52 53 54 55 56 57 58, à direita: 39 40 41 42 43 45
+    50 51 52 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72
+arithmetic (85)
+    à esquerda: 59 60 61 62 63 64, à direita: 55
+condition (86)
+    à esquerda: 65 66 67 68 69 70 71 72, à direita: 56
+keywordconst (87)
+    à esquerda: 73 74 75 76, à direita: 53
+value (88)
+    à esquerda: 77 78 79 80, à direita: 54
+identlist (89)
+    à esquerda: 81, à direita: 11 12 26
+identlisti (90)
+    à esquerda: 82 83, à direita: 81 83
+
+
+Estado0
+
+    0 $accept: . program $end
+
+    CLASS  fazer shift, e ir para o estado 1
+
+    program    ir para o estado 2
+    classlist  ir para o estado 3
+    class      ir para o estado 4
+
+
+Estado1
+
+    4 class: CLASS . IDENT '{' fieldlist funclist '}'
+    5      | CLASS . IDENT '{' fieldlist '}'
+    6      | CLASS . IDENT '{' funclist '}'
+    7      | CLASS . IDENT '{' '}'
+
+    IDENT  fazer shift, e ir para o estado 5
+
+
+Estado2
+
+    0 $accept: program . $end
+
+    $end  fazer shift, e ir para o estado 6
+
+
+Estado3
+
+    1 program: classlist .
+    3 classlist: classlist . class
+
+    CLASS  fazer shift, e ir para o estado 1
+
+    $default  reduzir usando a regra 1 (program)
+
+    class  ir para o estado 7
+
+
+Estado4
+
+    2 classlist: class .
+
+    $default  reduzir usando a regra 2 (classlist)
+
+
+Estado5
+
+    4 class: CLASS IDENT . '{' fieldlist funclist '}'
+    5      | CLASS IDENT . '{' fieldlist '}'
+    6      | CLASS IDENT . '{' funclist '}'
+    7      | CLASS IDENT . '{' '}'
+
+    '{'  fazer shift, e ir para o estado 8
+
+
+Estado6
+
+    0 $accept: program $end .
+
+    $default  aceite
+
+
+Estado7
+
+    3 classlist: classlist class .
+
+    $default  reduzir usando a regra 3 (classlist)
+
+
+Estado8
+
+    4 class: CLASS IDENT '{' . fieldlist funclist '}'
+    5      | CLASS IDENT '{' . fieldlist '}'
+    6      | CLASS IDENT '{' . funclist '}'
+    7      | CLASS IDENT '{' . '}'
+
+    FUNCTION  fazer shift, e ir para o estado 9
+    METHOD    fazer shift, e ir para o estado 10
+    FIELD     fazer shift, e ir para o estado 11
+    CTOR      fazer shift, e ir para o estado 12
+    STATIC    fazer shift, e ir para o estado 13
+    '}'       fazer shift, e ir para o estado 14
+
+    fieldlist   ir para o estado 15
+    fieldlisti  ir para o estado 16
+    field       ir para o estado 17
+    funclist    ir para o estado 18
+    funclisti   ir para o estado 19
+    function    ir para o estado 20
+    funckind    ir para o estado 21
+
+
+Estado9
+
+   18 funckind: FUNCTION .
+
+    $default  reduzir usando a regra 18 (funckind)
+
+
+Estado10
+
+   19 funckind: METHOD .
+
+    $default  reduzir usando a regra 19 (funckind)
+
+
+Estado11
+
+   12 field: FIELD . vartype identlist ';'
+
+    VARINT     fazer shift, e ir para o estado 22
+    VARDOUBLE  fazer shift, e ir para o estado 23
+    VARCHAR    fazer shift, e ir para o estado 24
+    VARBOOL    fazer shift, e ir para o estado 25
+    IDENT      fazer shift, e ir para o estado 26
+
+    vartype  ir para o estado 27
+
+
+Estado12
+
+   17 funckind: CTOR .
+
+    $default  reduzir usando a regra 17 (funckind)
+
+
+Estado13
+
+   11 field: STATIC . vartype identlist ';'
+
+    VARINT     fazer shift, e ir para o estado 22
+    VARDOUBLE  fazer shift, e ir para o estado 23
+    VARCHAR    fazer shift, e ir para o estado 24
+    VARBOOL    fazer shift, e ir para o estado 25
+    IDENT      fazer shift, e ir para o estado 26
+
+    vartype  ir para o estado 28
+
+
+Estado14
+
+    7 class: CLASS IDENT '{' '}' .
+
+    $default  reduzir usando a regra 7 (class)
+
+
+Estado15
+
+    4 class: CLASS IDENT '{' fieldlist . funclist '}'
+    5      | CLASS IDENT '{' fieldlist . '}'
+
+    FUNCTION  fazer shift, e ir para o estado 9
+    METHOD    fazer shift, e ir para o estado 10
+    CTOR      fazer shift, e ir para o estado 12
+    '}'       fazer shift, e ir para o estado 29
+
+    funclist   ir para o estado 30
+    funclisti  ir para o estado 19
+    function   ir para o estado 20
+    funckind   ir para o estado 21
+
+
+Estado16
+
+    8 fieldlist: fieldlisti .
+   10 fieldlisti: fieldlisti . field
+
+    FIELD   fazer shift, e ir para o estado 11
+    STATIC  fazer shift, e ir para o estado 13
+
+    $default  reduzir usando a regra 8 (fieldlist)
+
+    field  ir para o estado 31
+
+
+Estado17
+
+    9 fieldlisti: field .
+
+    $default  reduzir usando a regra 9 (fieldlisti)
+
+
+Estado18
+
+    6 class: CLASS IDENT '{' funclist . '}'
+
+    '}'  fazer shift, e ir para o estado 32
+
+
+Estado19
+
+   13 funclist: funclisti .
+   15 funclisti: funclisti . function
+
+    FUNCTION  fazer shift, e ir para o estado 9
+    METHOD    fazer shift, e ir para o estado 10
+    CTOR      fazer shift, e ir para o estado 12
+
+    $default  reduzir usando a regra 13 (funclist)
+
+    function  ir para o estado 33
+    funckind  ir para o estado 21
+
+
+Estado20
+
+   14 funclisti: function .
+
+    $default  reduzir usando a regra 14 (funclisti)
+
+
+Estado21
+
+   16 function: funckind . functype IDENT '(' paramlist ')' fbody
+
+    VARINT     fazer shift, e ir para o estado 22
+    VARDOUBLE  fazer shift, e ir para o estado 23
+    VARCHAR    fazer shift, e ir para o estado 24
+    VARVOID    fazer shift, e ir para o estado 34
+    VARBOOL    fazer shift, e ir para o estado 25
+    IDENT      fazer shift, e ir para o estado 26
+
+    functype  ir para o estado 35
+    vartype   ir para o estado 36
+
+
+Estado22
+
+   31 vartype: VARINT .
+
+    $default  reduzir usando a regra 31 (vartype)
+
+
+Estado23
+
+   32 vartype: VARDOUBLE .
+
+    $default  reduzir usando a regra 32 (vartype)
+
+
+Estado24
+
+   33 vartype: VARCHAR .
+
+    $default  reduzir usando a regra 33 (vartype)
+
+
+Estado25
+
+   34 vartype: VARBOOL .
+
+    $default  reduzir usando a regra 34 (vartype)
+
+
+Estado26
+
+   35 vartype: IDENT .
+
+    $default  reduzir usando a regra 35 (vartype)
+
+
+Estado27
+
+   12 field: FIELD vartype . identlist ';'
+
+    IDENT  fazer shift, e ir para o estado 37
+
+    identlist   ir para o estado 38
+    identlisti  ir para o estado 39
+
+
+Estado28
+
+   11 field: STATIC vartype . identlist ';'
+
+    IDENT  fazer shift, e ir para o estado 37
+
+    identlist   ir para o estado 40
+    identlisti  ir para o estado 39
+
+
+Estado29
+
+    5 class: CLASS IDENT '{' fieldlist '}' .
+
+    $default  reduzir usando a regra 5 (class)
+
+
+Estado30
+
+    4 class: CLASS IDENT '{' fieldlist funclist . '}'
+
+    '}'  fazer shift, e ir para o estado 41
+
+
+Estado31
+
+   10 fieldlisti: fieldlisti field .
+
+    $default  reduzir usando a regra 10 (fieldlisti)
+
+
+Estado32
+
+    6 class: CLASS IDENT '{' funclist '}' .
+
+    $default  reduzir usando a regra 6 (class)
+
+
+Estado33
+
+   15 funclisti: funclisti function .
+
+    $default  reduzir usando a regra 15 (funclisti)
+
+
+Estado34
+
+   20 functype: VARVOID .
+
+    $default  reduzir usando a regra 20 (functype)
+
+
+Estado35
+
+   16 function: funckind functype . IDENT '(' paramlist ')' fbody
+
+    IDENT  fazer shift, e ir para o estado 42
+
+
+Estado36
+
+   21 functype: vartype .
+
+    $default  reduzir usando a regra 21 (functype)
+
+
+Estado37
+
+   82 identlisti: IDENT .
+
+    $default  reduzir usando a regra 82 (identlisti)
+
+
+Estado38
+
+   12 field: FIELD vartype identlist . ';'
+
+    ';'  fazer shift, e ir para o estado 43
+
+
+Estado39
+
+   81 identlist: identlisti .
+   83 identlisti: identlisti . ',' IDENT
+
+    ','  fazer shift, e ir para o estado 44
+
+    $default  reduzir usando a regra 81 (identlist)
+
+
+Estado40
+
+   11 field: STATIC vartype identlist . ';'
+
+    ';'  fazer shift, e ir para o estado 45
+
+
+Estado41
+
+    4 class: CLASS IDENT '{' fieldlist funclist '}' .
+
+    $default  reduzir usando a regra 4 (class)
+
+
+Estado42
+
+   16 function: funckind functype IDENT . '(' paramlist ')' fbody
+
+    '('  fazer shift, e ir para o estado 46
+
+
+Estado43
+
+   12 field: FIELD vartype identlist ';' .
+
+    $default  reduzir usando a regra 12 (field)
+
+
+Estado44
+
+   83 identlisti: identlisti ',' . IDENT
+
+    IDENT  fazer shift, e ir para o estado 47
+
+
+Estado45
+
+   11 field: STATIC vartype identlist ';' .
+
+    $default  reduzir usando a regra 11 (field)
+
+
+Estado46
+
+   16 function: funckind functype IDENT '(' . paramlist ')' fbody
+
+    VARINT     fazer shift, e ir para o estado 22
+    VARDOUBLE  fazer shift, e ir para o estado 23
+    VARCHAR    fazer shift, e ir para o estado 24
+    VARBOOL    fazer shift, e ir para o estado 25
+    IDENT      fazer shift, e ir para o estado 26
+
+    paramlist   ir para o estado 48
+    paramlisti  ir para o estado 49
+    param       ir para o estado 50
+    vartype     ir para o estado 51
+
+
+Estado47
+
+   83 identlisti: identlisti ',' IDENT .
+
+    $default  reduzir usando a regra 83 (identlisti)
+
+
+Estado48
+
+   16 function: funckind functype IDENT '(' paramlist . ')' fbody
+
+    ')'  fazer shift, e ir para o estado 52
+
+
+Estado49
+
+   27 paramlist: paramlisti .
+   29 paramlisti: paramlisti . ',' param
+
+    ','  fazer shift, e ir para o estado 53
+
+    $default  reduzir usando a regra 27 (paramlist)
+
+
+Estado50
+
+   28 paramlisti: param .
+
+    $default  reduzir usando a regra 28 (paramlisti)
+
+
+Estado51
+
+   30 param: vartype . IDENT
+
+    IDENT  fazer shift, e ir para o estado 54
+
+
+Estado52
+
+   16 function: funckind functype IDENT '(' paramlist ')' . fbody
+
+    '{'  fazer shift, e ir para o estado 55
+
+    fbody  ir para o estado 56
+
+
+Estado53
+
+   29 paramlisti: paramlisti ',' . param
+
+    VARINT     fazer shift, e ir para o estado 22
+    VARDOUBLE  fazer shift, e ir para o estado 23
+    VARCHAR    fazer shift, e ir para o estado 24
+    VARBOOL    fazer shift, e ir para o estado 25
+    IDENT      fazer shift, e ir para o estado 26
+
+    param    ir para o estado 57
+    vartype  ir para o estado 51
+
+
+Estado54
+
+   30 param: vartype IDENT .
+
+    $default  reduzir usando a regra 30 (param)
+
+
+Estado55
+
+   22 fbody: '{' . vardecllist instrs '}'
+
+    $default  reduzir usando a regra 24 (vardecllisti)
+
+    vardecllist   ir para o estado 58
+    vardecllisti  ir para o estado 59
+
+
+Estado56
+
+   16 function: funckind functype IDENT '(' paramlist ')' fbody .
+
+    $default  reduzir usando a regra 16 (function)
+
+
+Estado57
+
+   29 paramlisti: paramlisti ',' param .
+
+    $default  reduzir usando a regra 29 (paramlisti)
+
+
+Estado58
+
+   22 fbody: '{' vardecllist . instrs '}'
+
+    IF      fazer shift, e ir para o estado 60
+    WHILE   fazer shift, e ir para o estado 61
+    DO      fazer shift, e ir para o estado 62
+    LET     fazer shift, e ir para o estado 63
+    RETURN  fazer shift, e ir para o estado 64
+
+    instrs   ir para o estado 65
+    instrsi  ir para o estado 66
+    instr    ir para o estado 67
+
+
+Estado59
+
+   23 vardecllist: vardecllisti .
+   25 vardecllisti: vardecllisti . vardecl
+
+    VAR  fazer shift, e ir para o estado 68
+
+    $default  reduzir usando a regra 23 (vardecllist)
+
+    vardecl  ir para o estado 69
+
+
+Estado60
+
+   41 instr: IF . '(' expr ')' block
+   42      | IF . '(' expr ')' block ELSE block
+
+    '('  fazer shift, e ir para o estado 70
+
+
+Estado61
+
+   43 instr: WHILE . '(' expr ')' block
+
+    '('  fazer shift, e ir para o estado 71
+
+
+Estado62
+
+   44 instr: DO . call
+
+    IDENT  fazer shift, e ir para o estado 72
+
+    call  ir para o estado 73
+
+
+Estado63
+
+   39 instr: LET . IDENT '[' expr ']' '=' expr
+   40      | LET . IDENT '=' expr
+
+    IDENT  fazer shift, e ir para o estado 74
+
+
+Estado64
+
+   45 instr: RETURN . expr
+
+    TRUE     fazer shift, e ir para o estado 75
+    FALSE    fazer shift, e ir para o estado 76
+    THIS     fazer shift, e ir para o estado 77
+    NUL      fazer shift, e ir para o estado 78
+    '-'      fazer shift, e ir para o estado 79
+    IDENT    fazer shift, e ir para o estado 80
+    STRING   fazer shift, e ir para o estado 81
+    INTEGER  fazer shift, e ir para o estado 82
+    DOUBLE   fazer shift, e ir para o estado 83
+    '('      fazer shift, e ir para o estado 84
+    '~'      fazer shift, e ir para o estado 85
+
+    expr          ir para o estado 86
+    arithmetic    ir para o estado 87
+    condition     ir para o estado 88
+    keywordconst  ir para o estado 89
+    value         ir para o estado 90
+
+
+Estado65
+
+   22 fbody: '{' vardecllist instrs . '}'
+
+    '}'  fazer shift, e ir para o estado 91
+
+
+Estado66
+
+   36 instrs: instrsi .
+   38 instrsi: instrsi . instr ';'
+
+    IF      fazer shift, e ir para o estado 60
+    WHILE   fazer shift, e ir para o estado 61
+    DO      fazer shift, e ir para o estado 62
+    LET     fazer shift, e ir para o estado 63
+    RETURN  fazer shift, e ir para o estado 64
+
+    $default  reduzir usando a regra 36 (instrs)
+
+    instr  ir para o estado 92
+
+
+Estado67
+
+   37 instrsi: instr . ';'
+
+    ';'  fazer shift, e ir para o estado 93
+
+
+Estado68
+
+   26 vardecl: VAR . vartype identlist ';'
+
+    VARINT     fazer shift, e ir para o estado 22
+    VARDOUBLE  fazer shift, e ir para o estado 23
+    VARCHAR    fazer shift, e ir para o estado 24
+    VARBOOL    fazer shift, e ir para o estado 25
+    IDENT      fazer shift, e ir para o estado 26
+
+    vartype  ir para o estado 94
+
+
+Estado69
+
+   25 vardecllisti: vardecllisti vardecl .
+
+    $default  reduzir usando a regra 25 (vardecllisti)
+
+
+Estado70
+
+   41 instr: IF '(' . expr ')' block
+   42      | IF '(' . expr ')' block ELSE block
+
+    TRUE     fazer shift, e ir para o estado 75
+    FALSE    fazer shift, e ir para o estado 76
+    THIS     fazer shift, e ir para o estado 77
+    NUL      fazer shift, e ir para o estado 78
+    '-'      fazer shift, e ir para o estado 79
+    IDENT    fazer shift, e ir para o estado 80
+    STRING   fazer shift, e ir para o estado 81
+    INTEGER  fazer shift, e ir para o estado 82
+    DOUBLE   fazer shift, e ir para o estado 83
+    '('      fazer shift, e ir para o estado 84
+    '~'      fazer shift, e ir para o estado 85
+
+    expr          ir para o estado 95
+    arithmetic    ir para o estado 87
+    condition     ir para o estado 88
+    keywordconst  ir para o estado 89
+    value         ir para o estado 90
+
+
+Estado71
+
+   43 instr: WHILE '(' . expr ')' block
+
+    TRUE     fazer shift, e ir para o estado 75
+    FALSE    fazer shift, e ir para o estado 76
+    THIS     fazer shift, e ir para o estado 77
+    NUL      fazer shift, e ir para o estado 78
+    '-'      fazer shift, e ir para o estado 79
+    IDENT    fazer shift, e ir para o estado 80
+    STRING   fazer shift, e ir para o estado 81
+    INTEGER  fazer shift, e ir para o estado 82
+    DOUBLE   fazer shift, e ir para o estado 83
+    '('      fazer shift, e ir para o estado 84
+    '~'      fazer shift, e ir para o estado 85
+
+    expr          ir para o estado 96
+    arithmetic    ir para o estado 87
+    condition     ir para o estado 88
+    keywordconst  ir para o estado 89
+    value         ir para o estado 90
+
+
+Estado72
+
+   47 call: IDENT . '(' exprlist ')'
+   48     | IDENT . '.' IDENT '(' exprlist ')'
+
+    '('  fazer shift, e ir para o estado 97
+    '.'  fazer shift, e ir para o estado 98
+
+
+Estado73
+
+   44 instr: DO call .
+
+    $default  reduzir usando a regra 44 (instr)
+
+
+Estado74
+
+   39 instr: LET IDENT . '[' expr ']' '=' expr
+   40      | LET IDENT . '=' expr
+
+    '='  fazer shift, e ir para o estado 99
+    '['  fazer shift, e ir para o estado 100
+
+
+Estado75
+
+   76 keywordconst: TRUE .
+
+    $default  reduzir usando a regra 76 (keywordconst)
+
+
+Estado76
+
+   75 keywordconst: FALSE .
+
+    $default  reduzir usando a regra 75 (keywordconst)
+
+
+Estado77
+
+   73 keywordconst: THIS .
+
+    $default  reduzir usando a regra 73 (keywordconst)
+
+
+Estado78
+
+   74 keywordconst: NUL .
+
+    $default  reduzir usando a regra 74 (keywordconst)
+
+
+Estado79
+
+   57 expr: '-' . expr
+
+    TRUE     fazer shift, e ir para o estado 75
+    FALSE    fazer shift, e ir para o estado 76
+    THIS     fazer shift, e ir para o estado 77
+    NUL      fazer shift, e ir para o estado 78
+    '-'      fazer shift, e ir para o estado 79
+    IDENT    fazer shift, e ir para o estado 80
+    STRING   fazer shift, e ir para o estado 81
+    INTEGER  fazer shift, e ir para o estado 82
+    DOUBLE   fazer shift, e ir para o estado 83
+    '('      fazer shift, e ir para o estado 84
+    '~'      fazer shift, e ir para o estado 85
+
+    expr          ir para o estado 101
+    arithmetic    ir para o estado 87
+    condition     ir para o estado 88
+    keywordconst  ir para o estado 89
+    value         ir para o estado 90
+
+
+Estado80
+
+   80 value: IDENT .
+
+    $default  reduzir usando a regra 80 (value)
+
+
+Estado81
+
+   79 value: STRING .
+
+    $default  reduzir usando a regra 79 (value)
+
+
+Estado82
+
+   77 value: INTEGER .
+
+    $default  reduzir usando a regra 77 (value)
+
+
+Estado83
+
+   78 value: DOUBLE .
+
+    $default  reduzir usando a regra 78 (value)
+
+
+Estado84
+
+   52 expr: '(' . expr ')'
+
+    TRUE     fazer shift, e ir para o estado 75
+    FALSE    fazer shift, e ir para o estado 76
+    THIS     fazer shift, e ir para o estado 77
+    NUL      fazer shift, e ir para o estado 78
+    '-'      fazer shift, e ir para o estado 79
+    IDENT    fazer shift, e ir para o estado 80
+    STRING   fazer shift, e ir para o estado 81
+    INTEGER  fazer shift, e ir para o estado 82
+    DOUBLE   fazer shift, e ir para o estado 83
+    '('      fazer shift, e ir para o estado 84
+    '~'      fazer shift, e ir para o estado 85
+
+    expr          ir para o estado 102
+    arithmetic    ir para o estado 87
+    condition     ir para o estado 88
+    keywordconst  ir para o estado 89
+    value         ir para o estado 90
+
+
+Estado85
+
+   58 expr: '~' . expr
+
+    TRUE     fazer shift, e ir para o estado 75
+    FALSE    fazer shift, e ir para o estado 76
+    THIS     fazer shift, e ir para o estado 77
+    NUL      fazer shift, e ir para o estado 78
+    '-'      fazer shift, e ir para o estado 79
+    IDENT    fazer shift, e ir para o estado 80
+    STRING   fazer shift, e ir para o estado 81
+    INTEGER  fazer shift, e ir para o estado 82
+    DOUBLE   fazer shift, e ir para o estado 83
+    '('      fazer shift, e ir para o estado 84
+    '~'      fazer shift, e ir para o estado 85
+
+    expr          ir para o estado 103
+    arithmetic    ir para o estado 87
+    condition     ir para o estado 88
+    keywordconst  ir para o estado 89
+    value         ir para o estado 90
+
+
+Estado86
+
+   45 instr: RETURN expr .
+   59 arithmetic: expr . '+' expr
+   60           | expr . '-' expr
+   61           | expr . '/' expr
+   62           | expr . '*' expr
+   63           | expr . '&' expr
+   64           | expr . '|' expr
+   65 condition: expr . '<' expr
+   66          | expr . '>' expr
+   67          | expr . EQUAL expr
+   68          | expr . GE expr
+   69          | expr . LE expr
+   70          | expr . DIFF expr
+   71          | expr . AND expr
+   72          | expr . OR expr
+
+    GE     fazer shift, e ir para o estado 104
+    LE     fazer shift, e ir para o estado 105
+    '|'    fazer shift, e ir para o estado 106
+    '&'    fazer shift, e ir para o estado 107
+    '/'    fazer shift, e ir para o estado 108
+    '*'    fazer shift, e ir para o estado 109
+    '+'    fazer shift, e ir para o estado 110
+    '-'    fazer shift, e ir para o estado 111
+    AND    fazer shift, e ir para o estado 112
+    OR     fazer shift, e ir para o estado 113
+    EQUAL  fazer shift, e ir para o estado 114
+    DIFF   fazer shift, e ir para o estado 115
+    '<'    fazer shift, e ir para o estado 116
+    '>'    fazer shift, e ir para o estado 117
+
+    $default  reduzir usando a regra 45 (instr)
+
+
+Estado87
+
+   55 expr: arithmetic .
+
+    $default  reduzir usando a regra 55 (expr)
+
+
+Estado88
+
+   56 expr: condition .
+
+    $default  reduzir usando a regra 56 (expr)
+
+
+Estado89
+
+   53 expr: keywordconst .
+
+    $default  reduzir usando a regra 53 (expr)
+
+
+Estado90
+
+   54 expr: value .
+
+    $default  reduzir usando a regra 54 (expr)
+
+
+Estado91
+
+   22 fbody: '{' vardecllist instrs '}' .
+
+    $default  reduzir usando a regra 22 (fbody)
+
+
+Estado92
+
+   38 instrsi: instrsi instr . ';'
+
+    ';'  fazer shift, e ir para o estado 118
+
+
+Estado93
+
+   37 instrsi: instr ';' .
+
+    $default  reduzir usando a regra 37 (instrsi)
+
+
+Estado94
+
+   26 vardecl: VAR vartype . identlist ';'
+
+    IDENT  fazer shift, e ir para o estado 37
+
+    identlist   ir para o estado 119
+    identlisti  ir para o estado 39
+
+
+Estado95
+
+   41 instr: IF '(' expr . ')' block
+   42      | IF '(' expr . ')' block ELSE block
+   59 arithmetic: expr . '+' expr
+   60           | expr . '-' expr
+   61           | expr . '/' expr
+   62           | expr . '*' expr
+   63           | expr . '&' expr
+   64           | expr . '|' expr
+   65 condition: expr . '<' expr
+   66          | expr . '>' expr
+   67          | expr . EQUAL expr
+   68          | expr . GE expr
+   69          | expr . LE expr
+   70          | expr . DIFF expr
+   71          | expr . AND expr
+   72          | expr . OR expr
+
+    GE     fazer shift, e ir para o estado 104
+    LE     fazer shift, e ir para o estado 105
+    '|'    fazer shift, e ir para o estado 106
+    '&'    fazer shift, e ir para o estado 107
+    '/'    fazer shift, e ir para o estado 108
+    '*'    fazer shift, e ir para o estado 109
+    '+'    fazer shift, e ir para o estado 110
+    '-'    fazer shift, e ir para o estado 111
+    AND    fazer shift, e ir para o estado 112
+    OR     fazer shift, e ir para o estado 113
+    EQUAL  fazer shift, e ir para o estado 114
+    DIFF   fazer shift, e ir para o estado 115
+    '<'    fazer shift, e ir para o estado 116
+    '>'    fazer shift, e ir para o estado 117
+    ')'    fazer shift, e ir para o estado 120
+
+
+Estado96
+
+   43 instr: WHILE '(' expr . ')' block
+   59 arithmetic: expr . '+' expr
+   60           | expr . '-' expr
+   61           | expr . '/' expr
+   62           | expr . '*' expr
+   63           | expr . '&' expr
+   64           | expr . '|' expr
+   65 condition: expr . '<' expr
+   66          | expr . '>' expr
+   67          | expr . EQUAL expr
+   68          | expr . GE expr
+   69          | expr . LE expr
+   70          | expr . DIFF expr
+   71          | expr . AND expr
+   72          | expr . OR expr
+
+    GE     fazer shift, e ir para o estado 104
+    LE     fazer shift, e ir para o estado 105
+    '|'    fazer shift, e ir para o estado 106
+    '&'    fazer shift, e ir para o estado 107
+    '/'    fazer shift, e ir para o estado 108
+    '*'    fazer shift, e ir para o estado 109
+    '+'    fazer shift, e ir para o estado 110
+    '-'    fazer shift, e ir para o estado 111
+    AND    fazer shift, e ir para o estado 112
+    OR     fazer shift, e ir para o estado 113
+    EQUAL  fazer shift, e ir para o estado 114
+    DIFF   fazer shift, e ir para o estado 115
+    '<'    fazer shift, e ir para o estado 116
+    '>'    fazer shift, e ir para o estado 117
+    ')'    fazer shift, e ir para o estado 121
+
+
+Estado97
+
+   47 call: IDENT '(' . exprlist ')'
+
+    TRUE     fazer shift, e ir para o estado 75
+    FALSE    fazer shift, e ir para o estado 76
+    THIS     fazer shift, e ir para o estado 77
+    NUL      fazer shift, e ir para o estado 78
+    '-'      fazer shift, e ir para o estado 79
+    IDENT    fazer shift, e ir para o estado 80
+    STRING   fazer shift, e ir para o estado 81
+    INTEGER  fazer shift, e ir para o estado 82
+    DOUBLE   fazer shift, e ir para o estado 83
+    '('      fazer shift, e ir para o estado 84
+    '~'      fazer shift, e ir para o estado 85
+
+    exprlist      ir para o estado 122
+    exprlisti     ir para o estado 123
+    expr          ir para o estado 124
+    arithmetic    ir para o estado 87
+    condition     ir para o estado 88
+    keywordconst  ir para o estado 89
+    value         ir para o estado 90
+
+
+Estado98
+
+   48 call: IDENT '.' . IDENT '(' exprlist ')'
+
+    IDENT  fazer shift, e ir para o estado 125
+
+
+Estado99
+
+   40 instr: LET IDENT '=' . expr
+
+    TRUE     fazer shift, e ir para o estado 75
+    FALSE    fazer shift, e ir para o estado 76
+    THIS     fazer shift, e ir para o estado 77
+    NUL      fazer shift, e ir para o estado 78
+    '-'      fazer shift, e ir para o estado 79
+    IDENT    fazer shift, e ir para o estado 80
+    STRING   fazer shift, e ir para o estado 81
+    INTEGER  fazer shift, e ir para o estado 82
+    DOUBLE   fazer shift, e ir para o estado 83
+    '('      fazer shift, e ir para o estado 84
+    '~'      fazer shift, e ir para o estado 85
+
+    expr          ir para o estado 126
+    arithmetic    ir para o estado 87
+    condition     ir para o estado 88
+    keywordconst  ir para o estado 89
+    value         ir para o estado 90
+
+
+Estado100
+
+   39 instr: LET IDENT '[' . expr ']' '=' expr
+
+    TRUE     fazer shift, e ir para o estado 75
+    FALSE    fazer shift, e ir para o estado 76
+    THIS     fazer shift, e ir para o estado 77
+    NUL      fazer shift, e ir para o estado 78
+    '-'      fazer shift, e ir para o estado 79
+    IDENT    fazer shift, e ir para o estado 80
+    STRING   fazer shift, e ir para o estado 81
+    INTEGER  fazer shift, e ir para o estado 82
+    DOUBLE   fazer shift, e ir para o estado 83
+    '('      fazer shift, e ir para o estado 84
+    '~'      fazer shift, e ir para o estado 85
+
+    expr          ir para o estado 127
+    arithmetic    ir para o estado 87
+    condition     ir para o estado 88
+    keywordconst  ir para o estado 89
+    value         ir para o estado 90
+
+
+Estado101
+
+   57 expr: '-' expr .
+   59 arithmetic: expr . '+' expr
+   60           | expr . '-' expr
+   61           | expr . '/' expr
+   62           | expr . '*' expr
+   63           | expr . '&' expr
+   64           | expr . '|' expr
+   65 condition: expr . '<' expr
+   66          | expr . '>' expr
+   67          | expr . EQUAL expr
+   68          | expr . GE expr
+   69          | expr . LE expr
+   70          | expr . DIFF expr
+   71          | expr . AND expr
+   72          | expr . OR expr
+
+    GE     fazer shift, e ir para o estado 104
+    LE     fazer shift, e ir para o estado 105
+    AND    fazer shift, e ir para o estado 112
+    OR     fazer shift, e ir para o estado 113
+    EQUAL  fazer shift, e ir para o estado 114
+    DIFF   fazer shift, e ir para o estado 115
+    '<'    fazer shift, e ir para o estado 116
+    '>'    fazer shift, e ir para o estado 117
+
+    $default  reduzir usando a regra 57 (expr)
+
+
+Estado102
+
+   52 expr: '(' expr . ')'
+   59 arithmetic: expr . '+' expr
+   60           | expr . '-' expr
+   61           | expr . '/' expr
+   62           | expr . '*' expr
+   63           | expr . '&' expr
+   64           | expr . '|' expr
+   65 condition: expr . '<' expr
+   66          | expr . '>' expr
+   67          | expr . EQUAL expr
+   68          | expr . GE expr
+   69          | expr . LE expr
+   70          | expr . DIFF expr
+   71          | expr . AND expr
+   72          | expr . OR expr
+
+    GE     fazer shift, e ir para o estado 104
+    LE     fazer shift, e ir para o estado 105
+    '|'    fazer shift, e ir para o estado 106
+    '&'    fazer shift, e ir para o estado 107
+    '/'    fazer shift, e ir para o estado 108
+    '*'    fazer shift, e ir para o estado 109
+    '+'    fazer shift, e ir para o estado 110
+    '-'    fazer shift, e ir para o estado 111
+    AND    fazer shift, e ir para o estado 112
+    OR     fazer shift, e ir para o estado 113
+    EQUAL  fazer shift, e ir para o estado 114
+    DIFF   fazer shift, e ir para o estado 115
+    '<'    fazer shift, e ir para o estado 116
+    '>'    fazer shift, e ir para o estado 117
+    ')'    fazer shift, e ir para o estado 128
+
+
+Estado103
+
+   58 expr: '~' expr .
+   59 arithmetic: expr . '+' expr
+   60           | expr . '-' expr
+   61           | expr . '/' expr
+   62           | expr . '*' expr
+   63           | expr . '&' expr
+   64           | expr . '|' expr
+   65 condition: expr . '<' expr
+   66          | expr . '>' expr
+   67          | expr . EQUAL expr
+   68          | expr . GE expr
+   69          | expr . LE expr
+   70          | expr . DIFF expr
+   71          | expr . AND expr
+   72          | expr . OR expr
+
+    GE     fazer shift, e ir para o estado 104
+    LE     fazer shift, e ir para o estado 105
+    '|'    fazer shift, e ir para o estado 106
+    '&'    fazer shift, e ir para o estado 107
+    '/'    fazer shift, e ir para o estado 108
+    '*'    fazer shift, e ir para o estado 109
+    '+'    fazer shift, e ir para o estado 110
+    '-'    fazer shift, e ir para o estado 111
+    AND    fazer shift, e ir para o estado 112
+    OR     fazer shift, e ir para o estado 113
+    EQUAL  fazer shift, e ir para o estado 114
+    DIFF   fazer shift, e ir para o estado 115
+    '<'    fazer shift, e ir para o estado 116
+    '>'    fazer shift, e ir para o estado 117
+
+    GE        [reduzir usando a regra 58 (expr)]
+    LE        [reduzir usando a regra 58 (expr)]
+    '|'       [reduzir usando a regra 58 (expr)]
+    '&'       [reduzir usando a regra 58 (expr)]
+    '/'       [reduzir usando a regra 58 (expr)]
+    '*'       [reduzir usando a regra 58 (expr)]
+    '+'       [reduzir usando a regra 58 (expr)]
+    '-'       [reduzir usando a regra 58 (expr)]
+    AND       [reduzir usando a regra 58 (expr)]
+    OR        [reduzir usando a regra 58 (expr)]
+    EQUAL     [reduzir usando a regra 58 (expr)]
+    DIFF      [reduzir usando a regra 58 (expr)]
+    '<'       [reduzir usando a regra 58 (expr)]
+    '>'       [reduzir usando a regra 58 (expr)]
+    $default  reduzir usando a regra 58 (expr)
+
+
+Estado104
+
+   68 condition: expr GE . expr
+
+    TRUE     fazer shift, e ir para o estado 75
+    FALSE    fazer shift, e ir para o estado 76
+    THIS     fazer shift, e ir para o estado 77
+    NUL      fazer shift, e ir para o estado 78
+    '-'      fazer shift, e ir para o estado 79
+    IDENT    fazer shift, e ir para o estado 80
+    STRING   fazer shift, e ir para o estado 81
+    INTEGER  fazer shift, e ir para o estado 82
+    DOUBLE   fazer shift, e ir para o estado 83
+    '('      fazer shift, e ir para o estado 84
+    '~'      fazer shift, e ir para o estado 85
+
+    expr          ir para o estado 129
+    arithmetic    ir para o estado 87
+    condition     ir para o estado 88
+    keywordconst  ir para o estado 89
+    value         ir para o estado 90
+
+
+Estado105
+
+   69 condition: expr LE . expr
+
+    TRUE     fazer shift, e ir para o estado 75
+    FALSE    fazer shift, e ir para o estado 76
+    THIS     fazer shift, e ir para o estado 77
+    NUL      fazer shift, e ir para o estado 78
+    '-'      fazer shift, e ir para o estado 79
+    IDENT    fazer shift, e ir para o estado 80
+    STRING   fazer shift, e ir para o estado 81
+    INTEGER  fazer shift, e ir para o estado 82
+    DOUBLE   fazer shift, e ir para o estado 83
+    '('      fazer shift, e ir para o estado 84
+    '~'      fazer shift, e ir para o estado 85
+
+    expr          ir para o estado 130
+    arithmetic    ir para o estado 87
+    condition     ir para o estado 88
+    keywordconst  ir para o estado 89
+    value         ir para o estado 90
+
+
+Estado106
+
+   64 arithmetic: expr '|' . expr
+
+    TRUE     fazer shift, e ir para o estado 75
+    FALSE    fazer shift, e ir para o estado 76
+    THIS     fazer shift, e ir para o estado 77
+    NUL      fazer shift, e ir para o estado 78
+    '-'      fazer shift, e ir para o estado 79
+    IDENT    fazer shift, e ir para o estado 80
+    STRING   fazer shift, e ir para o estado 81
+    INTEGER  fazer shift, e ir para o estado 82
+    DOUBLE   fazer shift, e ir para o estado 83
+    '('      fazer shift, e ir para o estado 84
+    '~'      fazer shift, e ir para o estado 85
+
+    expr          ir para o estado 131
+    arithmetic    ir para o estado 87
+    condition     ir para o estado 88
+    keywordconst  ir para o estado 89
+    value         ir para o estado 90
+
+
+Estado107
+
+   63 arithmetic: expr '&' . expr
+
+    TRUE     fazer shift, e ir para o estado 75
+    FALSE    fazer shift, e ir para o estado 76
+    THIS     fazer shift, e ir para o estado 77
+    NUL      fazer shift, e ir para o estado 78
+    '-'      fazer shift, e ir para o estado 79
+    IDENT    fazer shift, e ir para o estado 80
+    STRING   fazer shift, e ir para o estado 81
+    INTEGER  fazer shift, e ir para o estado 82
+    DOUBLE   fazer shift, e ir para o estado 83
+    '('      fazer shift, e ir para o estado 84
+    '~'      fazer shift, e ir para o estado 85
+
+    expr          ir para o estado 132
+    arithmetic    ir para o estado 87
+    condition     ir para o estado 88
+    keywordconst  ir para o estado 89
+    value         ir para o estado 90
+
+
+Estado108
+
+   61 arithmetic: expr '/' . expr
+
+    TRUE     fazer shift, e ir para o estado 75
+    FALSE    fazer shift, e ir para o estado 76
+    THIS     fazer shift, e ir para o estado 77
+    NUL      fazer shift, e ir para o estado 78
+    '-'      fazer shift, e ir para o estado 79
+    IDENT    fazer shift, e ir para o estado 80
+    STRING   fazer shift, e ir para o estado 81
+    INTEGER  fazer shift, e ir para o estado 82
+    DOUBLE   fazer shift, e ir para o estado 83
+    '('      fazer shift, e ir para o estado 84
+    '~'      fazer shift, e ir para o estado 85
+
+    expr          ir para o estado 133
+    arithmetic    ir para o estado 87
+    condition     ir para o estado 88
+    keywordconst  ir para o estado 89
+    value         ir para o estado 90
+
+
+Estado109
+
+   62 arithmetic: expr '*' . expr
+
+    TRUE     fazer shift, e ir para o estado 75
+    FALSE    fazer shift, e ir para o estado 76
+    THIS     fazer shift, e ir para o estado 77
+    NUL      fazer shift, e ir para o estado 78
+    '-'      fazer shift, e ir para o estado 79
+    IDENT    fazer shift, e ir para o estado 80
+    STRING   fazer shift, e ir para o estado 81
+    INTEGER  fazer shift, e ir para o estado 82
+    DOUBLE   fazer shift, e ir para o estado 83
+    '('      fazer shift, e ir para o estado 84
+    '~'      fazer shift, e ir para o estado 85
+
+    expr          ir para o estado 134
+    arithmetic    ir para o estado 87
+    condition     ir para o estado 88
+    keywordconst  ir para o estado 89
+    value         ir para o estado 90
+
+
+Estado110
+
+   59 arithmetic: expr '+' . expr
+
+    TRUE     fazer shift, e ir para o estado 75
+    FALSE    fazer shift, e ir para o estado 76
+    THIS     fazer shift, e ir para o estado 77
+    NUL      fazer shift, e ir para o estado 78
+    '-'      fazer shift, e ir para o estado 79
+    IDENT    fazer shift, e ir para o estado 80
+    STRING   fazer shift, e ir para o estado 81
+    INTEGER  fazer shift, e ir para o estado 82
+    DOUBLE   fazer shift, e ir para o estado 83
+    '('      fazer shift, e ir para o estado 84
+    '~'      fazer shift, e ir para o estado 85
+
+    expr          ir para o estado 135
+    arithmetic    ir para o estado 87
+    condition     ir para o estado 88
+    keywordconst  ir para o estado 89
+    value         ir para o estado 90
+
+
+Estado111
+
+   60 arithmetic: expr '-' . expr
+
+    TRUE     fazer shift, e ir para o estado 75
+    FALSE    fazer shift, e ir para o estado 76
+    THIS     fazer shift, e ir para o estado 77
+    NUL      fazer shift, e ir para o estado 78
+    '-'      fazer shift, e ir para o estado 79
+    IDENT    fazer shift, e ir para o estado 80
+    STRING   fazer shift, e ir para o estado 81
+    INTEGER  fazer shift, e ir para o estado 82
+    DOUBLE   fazer shift, e ir para o estado 83
+    '('      fazer shift, e ir para o estado 84
+    '~'      fazer shift, e ir para o estado 85
+
+    expr          ir para o estado 136
+    arithmetic    ir para o estado 87
+    condition     ir para o estado 88
+    keywordconst  ir para o estado 89
+    value         ir para o estado 90
+
+
+Estado112
+
+   71 condition: expr AND . expr
+
+    TRUE     fazer shift, e ir para o estado 75
+    FALSE    fazer shift, e ir para o estado 76
+    THIS     fazer shift, e ir para o estado 77
+    NUL      fazer shift, e ir para o estado 78
+    '-'      fazer shift, e ir para o estado 79
+    IDENT    fazer shift, e ir para o estado 80
+    STRING   fazer shift, e ir para o estado 81
+    INTEGER  fazer shift, e ir para o estado 82
+    DOUBLE   fazer shift, e ir para o estado 83
+    '('      fazer shift, e ir para o estado 84
+    '~'      fazer shift, e ir para o estado 85
+
+    expr          ir para o estado 137
+    arithmetic    ir para o estado 87
+    condition     ir para o estado 88
+    keywordconst  ir para o estado 89
+    value         ir para o estado 90
+
+
+Estado113
+
+   72 condition: expr OR . expr
+
+    TRUE     fazer shift, e ir para o estado 75
+    FALSE    fazer shift, e ir para o estado 76
+    THIS     fazer shift, e ir para o estado 77
+    NUL      fazer shift, e ir para o estado 78
+    '-'      fazer shift, e ir para o estado 79
+    IDENT    fazer shift, e ir para o estado 80
+    STRING   fazer shift, e ir para o estado 81
+    INTEGER  fazer shift, e ir para o estado 82
+    DOUBLE   fazer shift, e ir para o estado 83
+    '('      fazer shift, e ir para o estado 84
+    '~'      fazer shift, e ir para o estado 85
+
+    expr          ir para o estado 138
+    arithmetic    ir para o estado 87
+    condition     ir para o estado 88
+    keywordconst  ir para o estado 89
+    value         ir para o estado 90
+
+
+Estado114
+
+   67 condition: expr EQUAL . expr
+
+    TRUE     fazer shift, e ir para o estado 75
+    FALSE    fazer shift, e ir para o estado 76
+    THIS     fazer shift, e ir para o estado 77
+    NUL      fazer shift, e ir para o estado 78
+    '-'      fazer shift, e ir para o estado 79
+    IDENT    fazer shift, e ir para o estado 80
+    STRING   fazer shift, e ir para o estado 81
+    INTEGER  fazer shift, e ir para o estado 82
+    DOUBLE   fazer shift, e ir para o estado 83
+    '('      fazer shift, e ir para o estado 84
+    '~'      fazer shift, e ir para o estado 85
+
+    expr          ir para o estado 139
+    arithmetic    ir para o estado 87
+    condition     ir para o estado 88
+    keywordconst  ir para o estado 89
+    value         ir para o estado 90
+
+
+Estado115
+
+   70 condition: expr DIFF . expr
+
+    TRUE     fazer shift, e ir para o estado 75
+    FALSE    fazer shift, e ir para o estado 76
+    THIS     fazer shift, e ir para o estado 77
+    NUL      fazer shift, e ir para o estado 78
+    '-'      fazer shift, e ir para o estado 79
+    IDENT    fazer shift, e ir para o estado 80
+    STRING   fazer shift, e ir para o estado 81
+    INTEGER  fazer shift, e ir para o estado 82
+    DOUBLE   fazer shift, e ir para o estado 83
+    '('      fazer shift, e ir para o estado 84
+    '~'      fazer shift, e ir para o estado 85
+
+    expr          ir para o estado 140
+    arithmetic    ir para o estado 87
+    condition     ir para o estado 88
+    keywordconst  ir para o estado 89
+    value         ir para o estado 90
+
+
+Estado116
+
+   65 condition: expr '<' . expr
+
+    TRUE     fazer shift, e ir para o estado 75
+    FALSE    fazer shift, e ir para o estado 76
+    THIS     fazer shift, e ir para o estado 77
+    NUL      fazer shift, e ir para o estado 78
+    '-'      fazer shift, e ir para o estado 79
+    IDENT    fazer shift, e ir para o estado 80
+    STRING   fazer shift, e ir para o estado 81
+    INTEGER  fazer shift, e ir para o estado 82
+    DOUBLE   fazer shift, e ir para o estado 83
+    '('      fazer shift, e ir para o estado 84
+    '~'      fazer shift, e ir para o estado 85
+
+    expr          ir para o estado 141
+    arithmetic    ir para o estado 87
+    condition     ir para o estado 88
+    keywordconst  ir para o estado 89
+    value         ir para o estado 90
+
+
+Estado117
+
+   66 condition: expr '>' . expr
+
+    TRUE     fazer shift, e ir para o estado 75
+    FALSE    fazer shift, e ir para o estado 76
+    THIS     fazer shift, e ir para o estado 77
+    NUL      fazer shift, e ir para o estado 78
+    '-'      fazer shift, e ir para o estado 79
+    IDENT    fazer shift, e ir para o estado 80
+    STRING   fazer shift, e ir para o estado 81
+    INTEGER  fazer shift, e ir para o estado 82
+    DOUBLE   fazer shift, e ir para o estado 83
+    '('      fazer shift, e ir para o estado 84
+    '~'      fazer shift, e ir para o estado 85
+
+    expr          ir para o estado 142
+    arithmetic    ir para o estado 87
+    condition     ir para o estado 88
+    keywordconst  ir para o estado 89
+    value         ir para o estado 90
+
+
+Estado118
+
+   38 instrsi: instrsi instr ';' .
+
+    $default  reduzir usando a regra 38 (instrsi)
+
+
+Estado119
+
+   26 vardecl: VAR vartype identlist . ';'
+
+    ';'  fazer shift, e ir para o estado 143
+
+
+Estado120
+
+   41 instr: IF '(' expr ')' . block
+   42      | IF '(' expr ')' . block ELSE block
+
+    '{'  fazer shift, e ir para o estado 144
+
+    block  ir para o estado 145
+
+
+Estado121
+
+   43 instr: WHILE '(' expr ')' . block
+
+    '{'  fazer shift, e ir para o estado 144
+
+    block  ir para o estado 146
+
+
+Estado122
+
+   47 call: IDENT '(' exprlist . ')'
+
+    ')'  fazer shift, e ir para o estado 147
+
+
+Estado123
+
+   49 exprlist: exprlisti .
+   51 exprlisti: exprlisti . ',' expr
+
+    ','  fazer shift, e ir para o estado 148
+
+    $default  reduzir usando a regra 49 (exprlist)
+
+
+Estado124
+
+   50 exprlisti: expr .
+   59 arithmetic: expr . '+' expr
+   60           | expr . '-' expr
+   61           | expr . '/' expr
+   62           | expr . '*' expr
+   63           | expr . '&' expr
+   64           | expr . '|' expr
+   65 condition: expr . '<' expr
+   66          | expr . '>' expr
+   67          | expr . EQUAL expr
+   68          | expr . GE expr
+   69          | expr . LE expr
+   70          | expr . DIFF expr
+   71          | expr . AND expr
+   72          | expr . OR expr
+
+    GE     fazer shift, e ir para o estado 104
+    LE     fazer shift, e ir para o estado 105
+    '|'    fazer shift, e ir para o estado 106
+    '&'    fazer shift, e ir para o estado 107
+    '/'    fazer shift, e ir para o estado 108
+    '*'    fazer shift, e ir para o estado 109
+    '+'    fazer shift, e ir para o estado 110
+    '-'    fazer shift, e ir para o estado 111
+    AND    fazer shift, e ir para o estado 112
+    OR     fazer shift, e ir para o estado 113
+    EQUAL  fazer shift, e ir para o estado 114
+    DIFF   fazer shift, e ir para o estado 115
+    '<'    fazer shift, e ir para o estado 116
+    '>'    fazer shift, e ir para o estado 117
+
+    $default  reduzir usando a regra 50 (exprlisti)
+
+
+Estado125
+
+   48 call: IDENT '.' IDENT . '(' exprlist ')'
+
+    '('  fazer shift, e ir para o estado 149
+
+
+Estado126
+
+   40 instr: LET IDENT '=' expr .
+   59 arithmetic: expr . '+' expr
+   60           | expr . '-' expr
+   61           | expr . '/' expr
+   62           | expr . '*' expr
+   63           | expr . '&' expr
+   64           | expr . '|' expr
+   65 condition: expr . '<' expr
+   66          | expr . '>' expr
+   67          | expr . EQUAL expr
+   68          | expr . GE expr
+   69          | expr . LE expr
+   70          | expr . DIFF expr
+   71          | expr . AND expr
+   72          | expr . OR expr
+
+    GE     fazer shift, e ir para o estado 104
+    LE     fazer shift, e ir para o estado 105
+    '|'    fazer shift, e ir para o estado 106
+    '&'    fazer shift, e ir para o estado 107
+    '/'    fazer shift, e ir para o estado 108
+    '*'    fazer shift, e ir para o estado 109
+    '+'    fazer shift, e ir para o estado 110
+    '-'    fazer shift, e ir para o estado 111
+    AND    fazer shift, e ir para o estado 112
+    OR     fazer shift, e ir para o estado 113
+    EQUAL  fazer shift, e ir para o estado 114
+    DIFF   fazer shift, e ir para o estado 115
+    '<'    fazer shift, e ir para o estado 116
+    '>'    fazer shift, e ir para o estado 117
+
+    $default  reduzir usando a regra 40 (instr)
+
+
+Estado127
+
+   39 instr: LET IDENT '[' expr . ']' '=' expr
+   59 arithmetic: expr . '+' expr
+   60           | expr . '-' expr
+   61           | expr . '/' expr
+   62           | expr . '*' expr
+   63           | expr . '&' expr
+   64           | expr . '|' expr
+   65 condition: expr . '<' expr
+   66          | expr . '>' expr
+   67          | expr . EQUAL expr
+   68          | expr . GE expr
+   69          | expr . LE expr
+   70          | expr . DIFF expr
+   71          | expr . AND expr
+   72          | expr . OR expr
+
+    GE     fazer shift, e ir para o estado 104
+    LE     fazer shift, e ir para o estado 105
+    '|'    fazer shift, e ir para o estado 106
+    '&'    fazer shift, e ir para o estado 107
+    '/'    fazer shift, e ir para o estado 108
+    '*'    fazer shift, e ir para o estado 109
+    '+'    fazer shift, e ir para o estado 110
+    '-'    fazer shift, e ir para o estado 111
+    AND    fazer shift, e ir para o estado 112
+    OR     fazer shift, e ir para o estado 113
+    EQUAL  fazer shift, e ir para o estado 114
+    DIFF   fazer shift, e ir para o estado 115
+    '<'    fazer shift, e ir para o estado 116
+    '>'    fazer shift, e ir para o estado 117
+    ']'    fazer shift, e ir para o estado 150
+
+
+Estado128
+
+   52 expr: '(' expr ')' .
+
+    $default  reduzir usando a regra 52 (expr)
+
+
+Estado129
+
+   59 arithmetic: expr . '+' expr
+   60           | expr . '-' expr
+   61           | expr . '/' expr
+   62           | expr . '*' expr
+   63           | expr . '&' expr
+   64           | expr . '|' expr
+   65 condition: expr . '<' expr
+   66          | expr . '>' expr
+   67          | expr . EQUAL expr
+   68          | expr . GE expr
+   68          | expr GE expr .
+   69          | expr . LE expr
+   70          | expr . DIFF expr
+   71          | expr . AND expr
+   72          | expr . OR expr
+
+    $default  reduzir usando a regra 68 (condition)
+
+
+Estado130
+
+   59 arithmetic: expr . '+' expr
+   60           | expr . '-' expr
+   61           | expr . '/' expr
+   62           | expr . '*' expr
+   63           | expr . '&' expr
+   64           | expr . '|' expr
+   65 condition: expr . '<' expr
+   66          | expr . '>' expr
+   67          | expr . EQUAL expr
+   68          | expr . GE expr
+   69          | expr . LE expr
+   69          | expr LE expr .
+   70          | expr . DIFF expr
+   71          | expr . AND expr
+   72          | expr . OR expr
+
+    $default  reduzir usando a regra 69 (condition)
+
+
+Estado131
+
+   59 arithmetic: expr . '+' expr
+   60           | expr . '-' expr
+   61           | expr . '/' expr
+   62           | expr . '*' expr
+   63           | expr . '&' expr
+   64           | expr . '|' expr
+   64           | expr '|' expr .
+   65 condition: expr . '<' expr
+   66          | expr . '>' expr
+   67          | expr . EQUAL expr
+   68          | expr . GE expr
+   69          | expr . LE expr
+   70          | expr . DIFF expr
+   71          | expr . AND expr
+   72          | expr . OR expr
+
+    GE     fazer shift, e ir para o estado 104
+    LE     fazer shift, e ir para o estado 105
+    '/'    fazer shift, e ir para o estado 108
+    '*'    fazer shift, e ir para o estado 109
+    '+'    fazer shift, e ir para o estado 110
+    '-'    fazer shift, e ir para o estado 111
+    AND    fazer shift, e ir para o estado 112
+    OR     fazer shift, e ir para o estado 113
+    EQUAL  fazer shift, e ir para o estado 114
+    DIFF   fazer shift, e ir para o estado 115
+    '<'    fazer shift, e ir para o estado 116
+    '>'    fazer shift, e ir para o estado 117
+
+    $default  reduzir usando a regra 64 (arithmetic)
+
+
+Estado132
+
+   59 arithmetic: expr . '+' expr
+   60           | expr . '-' expr
+   61           | expr . '/' expr
+   62           | expr . '*' expr
+   63           | expr . '&' expr
+   63           | expr '&' expr .
+   64           | expr . '|' expr
+   65 condition: expr . '<' expr
+   66          | expr . '>' expr
+   67          | expr . EQUAL expr
+   68          | expr . GE expr
+   69          | expr . LE expr
+   70          | expr . DIFF expr
+   71          | expr . AND expr
+   72          | expr . OR expr
+
+    GE     fazer shift, e ir para o estado 104
+    LE     fazer shift, e ir para o estado 105
+    '/'    fazer shift, e ir para o estado 108
+    '*'    fazer shift, e ir para o estado 109
+    '+'    fazer shift, e ir para o estado 110
+    '-'    fazer shift, e ir para o estado 111
+    AND    fazer shift, e ir para o estado 112
+    OR     fazer shift, e ir para o estado 113
+    EQUAL  fazer shift, e ir para o estado 114
+    DIFF   fazer shift, e ir para o estado 115
+    '<'    fazer shift, e ir para o estado 116
+    '>'    fazer shift, e ir para o estado 117
+
+    $default  reduzir usando a regra 63 (arithmetic)
+
+
+Estado133
+
+   59 arithmetic: expr . '+' expr
+   60           | expr . '-' expr
+   61           | expr . '/' expr
+   61           | expr '/' expr .
+   62           | expr . '*' expr
+   63           | expr . '&' expr
+   64           | expr . '|' expr
+   65 condition: expr . '<' expr
+   66          | expr . '>' expr
+   67          | expr . EQUAL expr
+   68          | expr . GE expr
+   69          | expr . LE expr
+   70          | expr . DIFF expr
+   71          | expr . AND expr
+   72          | expr . OR expr
+
+    GE     fazer shift, e ir para o estado 104
+    LE     fazer shift, e ir para o estado 105
+    '+'    fazer shift, e ir para o estado 110
+    '-'    fazer shift, e ir para o estado 111
+    AND    fazer shift, e ir para o estado 112
+    OR     fazer shift, e ir para o estado 113
+    EQUAL  fazer shift, e ir para o estado 114
+    DIFF   fazer shift, e ir para o estado 115
+    '<'    fazer shift, e ir para o estado 116
+    '>'    fazer shift, e ir para o estado 117
+
+    $default  reduzir usando a regra 61 (arithmetic)
+
+
+Estado134
+
+   59 arithmetic: expr . '+' expr
+   60           | expr . '-' expr
+   61           | expr . '/' expr
+   62           | expr . '*' expr
+   62           | expr '*' expr .
+   63           | expr . '&' expr
+   64           | expr . '|' expr
+   65 condition: expr . '<' expr
+   66          | expr . '>' expr
+   67          | expr . EQUAL expr
+   68          | expr . GE expr
+   69          | expr . LE expr
+   70          | expr . DIFF expr
+   71          | expr . AND expr
+   72          | expr . OR expr
+
+    GE     fazer shift, e ir para o estado 104
+    LE     fazer shift, e ir para o estado 105
+    '+'    fazer shift, e ir para o estado 110
+    '-'    fazer shift, e ir para o estado 111
+    AND    fazer shift, e ir para o estado 112
+    OR     fazer shift, e ir para o estado 113
+    EQUAL  fazer shift, e ir para o estado 114
+    DIFF   fazer shift, e ir para o estado 115
+    '<'    fazer shift, e ir para o estado 116
+    '>'    fazer shift, e ir para o estado 117
+
+    $default  reduzir usando a regra 62 (arithmetic)
+
+
+Estado135
+
+   59 arithmetic: expr . '+' expr
+   59           | expr '+' expr .
+   60           | expr . '-' expr
+   61           | expr . '/' expr
+   62           | expr . '*' expr
+   63           | expr . '&' expr
+   64           | expr . '|' expr
+   65 condition: expr . '<' expr
+   66          | expr . '>' expr
+   67          | expr . EQUAL expr
+   68          | expr . GE expr
+   69          | expr . LE expr
+   70          | expr . DIFF expr
+   71          | expr . AND expr
+   72          | expr . OR expr
+
+    GE     fazer shift, e ir para o estado 104
+    LE     fazer shift, e ir para o estado 105
+    AND    fazer shift, e ir para o estado 112
+    OR     fazer shift, e ir para o estado 113
+    EQUAL  fazer shift, e ir para o estado 114
+    DIFF   fazer shift, e ir para o estado 115
+    '<'    fazer shift, e ir para o estado 116
+    '>'    fazer shift, e ir para o estado 117
+
+    $default  reduzir usando a regra 59 (arithmetic)
+
+
+Estado136
+
+   59 arithmetic: expr . '+' expr
+   60           | expr . '-' expr
+   60           | expr '-' expr .
+   61           | expr . '/' expr
+   62           | expr . '*' expr
+   63           | expr . '&' expr
+   64           | expr . '|' expr
+   65 condition: expr . '<' expr
+   66          | expr . '>' expr
+   67          | expr . EQUAL expr
+   68          | expr . GE expr
+   69          | expr . LE expr
+   70          | expr . DIFF expr
+   71          | expr . AND expr
+   72          | expr . OR expr
+
+    GE     fazer shift, e ir para o estado 104
+    LE     fazer shift, e ir para o estado 105
+    AND    fazer shift, e ir para o estado 112
+    OR     fazer shift, e ir para o estado 113
+    EQUAL  fazer shift, e ir para o estado 114
+    DIFF   fazer shift, e ir para o estado 115
+    '<'    fazer shift, e ir para o estado 116
+    '>'    fazer shift, e ir para o estado 117
+
+    $default  reduzir usando a regra 60 (arithmetic)
+
+
+Estado137
+
+   59 arithmetic: expr . '+' expr
+   60           | expr . '-' expr
+   61           | expr . '/' expr
+   62           | expr . '*' expr
+   63           | expr . '&' expr
+   64           | expr . '|' expr
+   65 condition: expr . '<' expr
+   66          | expr . '>' expr
+   67          | expr . EQUAL expr
+   68          | expr . GE expr
+   69          | expr . LE expr
+   70          | expr . DIFF expr
+   71          | expr . AND expr
+   71          | expr AND expr .
+   72          | expr . OR expr
+
+    GE     fazer shift, e ir para o estado 104
+    LE     fazer shift, e ir para o estado 105
+    OR     fazer shift, e ir para o estado 113
+    EQUAL  fazer shift, e ir para o estado 114
+    DIFF   fazer shift, e ir para o estado 115
+    '<'    fazer shift, e ir para o estado 116
+    '>'    fazer shift, e ir para o estado 117
+
+    $default  reduzir usando a regra 71 (condition)
+
+
+Estado138
+
+   59 arithmetic: expr . '+' expr
+   60           | expr . '-' expr
+   61           | expr . '/' expr
+   62           | expr . '*' expr
+   63           | expr . '&' expr
+   64           | expr . '|' expr
+   65 condition: expr . '<' expr
+   66          | expr . '>' expr
+   67          | expr . EQUAL expr
+   68          | expr . GE expr
+   69          | expr . LE expr
+   70          | expr . DIFF expr
+   71          | expr . AND expr
+   72          | expr . OR expr
+   72          | expr OR expr .
+
+    GE     fazer shift, e ir para o estado 104
+    LE     fazer shift, e ir para o estado 105
+    EQUAL  fazer shift, e ir para o estado 114
+    DIFF   fazer shift, e ir para o estado 115
+    '<'    fazer shift, e ir para o estado 116
+    '>'    fazer shift, e ir para o estado 117
+
+    $default  reduzir usando a regra 72 (condition)
+
+
+Estado139
+
+   59 arithmetic: expr . '+' expr
+   60           | expr . '-' expr
+   61           | expr . '/' expr
+   62           | expr . '*' expr
+   63           | expr . '&' expr
+   64           | expr . '|' expr
+   65 condition: expr . '<' expr
+   66          | expr . '>' expr
+   67          | expr . EQUAL expr
+   67          | expr EQUAL expr .
+   68          | expr . GE expr
+   69          | expr . LE expr
+   70          | expr . DIFF expr
+   71          | expr . AND expr
+   72          | expr . OR expr
+
+    $default  reduzir usando a regra 67 (condition)
+
+
+Estado140
+
+   59 arithmetic: expr . '+' expr
+   60           | expr . '-' expr
+   61           | expr . '/' expr
+   62           | expr . '*' expr
+   63           | expr . '&' expr
+   64           | expr . '|' expr
+   65 condition: expr . '<' expr
+   66          | expr . '>' expr
+   67          | expr . EQUAL expr
+   68          | expr . GE expr
+   69          | expr . LE expr
+   70          | expr . DIFF expr
+   70          | expr DIFF expr .
+   71          | expr . AND expr
+   72          | expr . OR expr
+
+    $default  reduzir usando a regra 70 (condition)
+
+
+Estado141
+
+   59 arithmetic: expr . '+' expr
+   60           | expr . '-' expr
+   61           | expr . '/' expr
+   62           | expr . '*' expr
+   63           | expr . '&' expr
+   64           | expr . '|' expr
+   65 condition: expr . '<' expr
+   65          | expr '<' expr .
+   66          | expr . '>' expr
+   67          | expr . EQUAL expr
+   68          | expr . GE expr
+   69          | expr . LE expr
+   70          | expr . DIFF expr
+   71          | expr . AND expr
+   72          | expr . OR expr
+
+    $default  reduzir usando a regra 65 (condition)
+
+
+Estado142
+
+   59 arithmetic: expr . '+' expr
+   60           | expr . '-' expr
+   61           | expr . '/' expr
+   62           | expr . '*' expr
+   63           | expr . '&' expr
+   64           | expr . '|' expr
+   65 condition: expr . '<' expr
+   66          | expr . '>' expr
+   66          | expr '>' expr .
+   67          | expr . EQUAL expr
+   68          | expr . GE expr
+   69          | expr . LE expr
+   70          | expr . DIFF expr
+   71          | expr . AND expr
+   72          | expr . OR expr
+
+    $default  reduzir usando a regra 66 (condition)
+
+
+Estado143
+
+   26 vardecl: VAR vartype identlist ';' .
+
+    $default  reduzir usando a regra 26 (vardecl)
+
+
+Estado144
+
+   46 block: '{' . instrs '}'
+
+    IF      fazer shift, e ir para o estado 60
+    WHILE   fazer shift, e ir para o estado 61
+    DO      fazer shift, e ir para o estado 62
+    LET     fazer shift, e ir para o estado 63
+    RETURN  fazer shift, e ir para o estado 64
+
+    instrs   ir para o estado 151
+    instrsi  ir para o estado 66
+    instr    ir para o estado 67
+
+
+Estado145
+
+   41 instr: IF '(' expr ')' block .
+   42      | IF '(' expr ')' block . ELSE block
+
+    ELSE  fazer shift, e ir para o estado 152
+
+    $default  reduzir usando a regra 41 (instr)
+
+
+Estado146
+
+   43 instr: WHILE '(' expr ')' block .
+
+    $default  reduzir usando a regra 43 (instr)
+
+
+Estado147
+
+   47 call: IDENT '(' exprlist ')' .
+
+    $default  reduzir usando a regra 47 (call)
+
+
+Estado148
+
+   51 exprlisti: exprlisti ',' . expr
+
+    TRUE     fazer shift, e ir para o estado 75
+    FALSE    fazer shift, e ir para o estado 76
+    THIS     fazer shift, e ir para o estado 77
+    NUL      fazer shift, e ir para o estado 78
+    '-'      fazer shift, e ir para o estado 79
+    IDENT    fazer shift, e ir para o estado 80
+    STRING   fazer shift, e ir para o estado 81
+    INTEGER  fazer shift, e ir para o estado 82
+    DOUBLE   fazer shift, e ir para o estado 83
+    '('      fazer shift, e ir para o estado 84
+    '~'      fazer shift, e ir para o estado 85
+
+    expr          ir para o estado 153
+    arithmetic    ir para o estado 87
+    condition     ir para o estado 88
+    keywordconst  ir para o estado 89
+    value         ir para o estado 90
+
+
+Estado149
+
+   48 call: IDENT '.' IDENT '(' . exprlist ')'
+
+    TRUE     fazer shift, e ir para o estado 75
+    FALSE    fazer shift, e ir para o estado 76
+    THIS     fazer shift, e ir para o estado 77
+    NUL      fazer shift, e ir para o estado 78
+    '-'      fazer shift, e ir para o estado 79
+    IDENT    fazer shift, e ir para o estado 80
+    STRING   fazer shift, e ir para o estado 81
+    INTEGER  fazer shift, e ir para o estado 82
+    DOUBLE   fazer shift, e ir para o estado 83
+    '('      fazer shift, e ir para o estado 84
+    '~'      fazer shift, e ir para o estado 85
+
+    exprlist      ir para o estado 154
+    exprlisti     ir para o estado 123
+    expr          ir para o estado 124
+    arithmetic    ir para o estado 87
+    condition     ir para o estado 88
+    keywordconst  ir para o estado 89
+    value         ir para o estado 90
+
+
+Estado150
+
+   39 instr: LET IDENT '[' expr ']' . '=' expr
+
+    '='  fazer shift, e ir para o estado 155
+
+
+Estado151
+
+   46 block: '{' instrs . '}'
+
+    '}'  fazer shift, e ir para o estado 156
+
+
+Estado152
+
+   42 instr: IF '(' expr ')' block ELSE . block
+
+    '{'  fazer shift, e ir para o estado 144
+
+    block  ir para o estado 157
+
+
+Estado153
+
+   51 exprlisti: exprlisti ',' expr .
+   59 arithmetic: expr . '+' expr
+   60           | expr . '-' expr
+   61           | expr . '/' expr
+   62           | expr . '*' expr
+   63           | expr . '&' expr
+   64           | expr . '|' expr
+   65 condition: expr . '<' expr
+   66          | expr . '>' expr
+   67          | expr . EQUAL expr
+   68          | expr . GE expr
+   69          | expr . LE expr
+   70          | expr . DIFF expr
+   71          | expr . AND expr
+   72          | expr . OR expr
+
+    GE     fazer shift, e ir para o estado 104
+    LE     fazer shift, e ir para o estado 105
+    '|'    fazer shift, e ir para o estado 106
+    '&'    fazer shift, e ir para o estado 107
+    '/'    fazer shift, e ir para o estado 108
+    '*'    fazer shift, e ir para o estado 109
+    '+'    fazer shift, e ir para o estado 110
+    '-'    fazer shift, e ir para o estado 111
+    AND    fazer shift, e ir para o estado 112
+    OR     fazer shift, e ir para o estado 113
+    EQUAL  fazer shift, e ir para o estado 114
+    DIFF   fazer shift, e ir para o estado 115
+    '<'    fazer shift, e ir para o estado 116
+    '>'    fazer shift, e ir para o estado 117
+
+    $default  reduzir usando a regra 51 (exprlisti)
+
+
+Estado154
+
+   48 call: IDENT '.' IDENT '(' exprlist . ')'
+
+    ')'  fazer shift, e ir para o estado 158
+
+
+Estado155
+
+   39 instr: LET IDENT '[' expr ']' '=' . expr
+
+    TRUE     fazer shift, e ir para o estado 75
+    FALSE    fazer shift, e ir para o estado 76
+    THIS     fazer shift, e ir para o estado 77
+    NUL      fazer shift, e ir para o estado 78
+    '-'      fazer shift, e ir para o estado 79
+    IDENT    fazer shift, e ir para o estado 80
+    STRING   fazer shift, e ir para o estado 81
+    INTEGER  fazer shift, e ir para o estado 82
+    DOUBLE   fazer shift, e ir para o estado 83
+    '('      fazer shift, e ir para o estado 84
+    '~'      fazer shift, e ir para o estado 85
+
+    expr          ir para o estado 159
+    arithmetic    ir para o estado 87
+    condition     ir para o estado 88
+    keywordconst  ir para o estado 89
+    value         ir para o estado 90
+
+
+Estado156
+
+   46 block: '{' instrs '}' .
+
+    $default  reduzir usando a regra 46 (block)
+
+
+Estado157
+
+   42 instr: IF '(' expr ')' block ELSE block .
+
+    $default  reduzir usando a regra 42 (instr)
+
+
+Estado158
+
+   48 call: IDENT '.' IDENT '(' exprlist ')' .
+
+    $default  reduzir usando a regra 48 (call)
+
+
+Estado159
+
+   39 instr: LET IDENT '[' expr ']' '=' expr .
+   59 arithmetic: expr . '+' expr
+   60           | expr . '-' expr
+   61           | expr . '/' expr
+   62           | expr . '*' expr
+   63           | expr . '&' expr
+   64           | expr . '|' expr
+   65 condition: expr . '<' expr
+   66          | expr . '>' expr
+   67          | expr . EQUAL expr
+   68          | expr . GE expr
+   69          | expr . LE expr
+   70          | expr . DIFF expr
+   71          | expr . AND expr
+   72          | expr . OR expr
+
+    GE     fazer shift, e ir para o estado 104
+    LE     fazer shift, e ir para o estado 105
+    '|'    fazer shift, e ir para o estado 106
+    '&'    fazer shift, e ir para o estado 107
+    '/'    fazer shift, e ir para o estado 108
+    '*'    fazer shift, e ir para o estado 109
+    '+'    fazer shift, e ir para o estado 110
+    '-'    fazer shift, e ir para o estado 111
+    AND    fazer shift, e ir para o estado 112
+    OR     fazer shift, e ir para o estado 113
+    EQUAL  fazer shift, e ir para o estado 114
+    DIFF   fazer shift, e ir para o estado 115
+    '<'    fazer shift, e ir para o estado 116
+    '>'    fazer shift, e ir para o estado 117
+
+    $default  reduzir usando a regra 39 (instr)

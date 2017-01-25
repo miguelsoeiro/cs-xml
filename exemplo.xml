@@ -1,0 +1,22 @@
+<program value="C#">
+<class value="Exemplo">
+	<list value="functions">
+		<method value="ExemploDeFuncao">
+			<type value="Fraction"></type>
+				<list value="parameters">
+				<parameter value="y">
+					<type value="INTEGER"></type>
+					</parameter>
+				</list>
+				<body value="">
+				<list value="variable decls"></list>
+					<list value="instructions">
+					<local var value="temp">
+						<integer value="12"></integer>
+						</local var>
+					</list>
+				</body>
+			</method>
+		</list>
+	</class>
+</program>
